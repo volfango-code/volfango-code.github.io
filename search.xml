@@ -1,8 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>helloworld</title>
-    <url>/2023/07/07/helloworld/</url>
-    <content><![CDATA[]]></content>
+    <title>导致JavaScript中this指向混乱的原因</title>
+    <url>/2023/07/23/%E5%AF%BC%E8%87%B4JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E6%B7%B7%E4%B9%B1%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <content><![CDATA[<h4 id="在-JavaScript-中，this-关键字的指向通常是动态的，而不是静态的。这意味着-this-可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致-this-指向混乱的原因包括以下几个方面："><a href="#在-JavaScript-中，this-关键字的指向通常是动态的，而不是静态的。这意味着-this-可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致-this-指向混乱的原因包括以下几个方面：" class="headerlink" title="在 JavaScript 中，this 关键字的指向通常是动态的，而不是静态的。这意味着 this 可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致 this 指向混乱的原因包括以下几个方面："></a>在 JavaScript 中，this 关键字的指向通常是动态的，而不是静态的。这意味着 this 可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致 this 指向混乱的原因包括以下几个方面：</h4><ol>
+<li><p>函数调用方式不同：当一个函数被调用时，它的 this 值取决于调用方式。如果使用普通函数调用方式（如 func()），则 this 会指向全局对象 window；如果使用方法调用方式（如 obj.func()），则 this 会指向调用该方法的对象。</p>
+</li>
+<li><p>箭头函数的使用：箭头函数不具有自己的 this 值，它会捕获上下文中的 this 值。因此，如果在箭头函数中访问 this，它将引用外层作用域中的 this 值。</p>
+</li>
+<li><p>使用 apply、call 和 bind 方法：apply、call 和 bind 方法可以改变函数执行时的 this 值。其中，apply 和 call 方法可以立即执行函数并传入参数，而 bind 方法可以返回一个新函数，该函数的 this 值被绑定到指定的对象上。</p>
+</li>
+<li><p>DOM 事件处理程序的使用：在处理 DOM 事件时，浏览器会将事件处理程序内部的 this 指向触发事件的元素。但是，在使用 addEventListener 方法绑定事件处理程序时，this 会指向全局对象 window，而不是目标元素。</p>
+</li>
+<li><p>对象的嵌套和继承：当一个对象被嵌套在另一个对象中或者使用继承时，this 的指向可能会变得混乱。这是因为 this 的指向取决于函数被调用时的上下文环境，而不是对象本身。因此，在嵌套对象或继承类中使用 this 时，需要特别注意它的指向。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>模块化方案 CommonJS、AMD、CMD、ES Module</title>
+    <url>/2023/07/23/%E6%A8%A1%E5%9D%97%E5%8C%96%E6%96%B9%E6%A1%88%20CommonJS%E3%80%81AMD%E3%80%81CMD%E3%80%81ES%20Module/</url>
+    <content><![CDATA[<p><strong>时间轴：CommonJS –&gt; AMD –&gt; CMD –&gt; ES Module</strong></p>
+<h4 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h4><ul>
+<li><p>常用于：<code>服务器端</code>，<code>node</code>，<code>webpack</code></p>
+</li>
+<li><p>特点：<code>同步/运行时加载</code>，<code>磁盘读取速度快</code></p>
+</li>
+<li><p>语法：</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 导出：通过module.exports或exports来暴露模块  </span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;  </span><br><span class="line">  attr1,  </span><br><span class="line">  attr2  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="built_in">exports</span>.<span class="property">attr</span> = xx  </span><br></pre></td></tr></table></figure></div>
+
+<p><strong>注意</strong>不可以<code>exports = xxx</code>，这样写会无效，因为更改了exports的地址，而 <code>exports</code> 是 <code>module.exports</code> 的引用指向的是同一个内存，模块最后导出的是 <code>module.exports</code> </p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 2. 引用：require(&#x27;x&#x27;)  </span></span><br><span class="line"><span class="keyword">const</span> xx = <span class="built_in">require</span>(<span class="string">&#x27;xx&#x27;</span>) <span class="comment">// 整体重命名  </span></span><br><span class="line"><span class="keyword">const</span> &#123; attr &#125; = <span class="built_in">require</span>(<span class="string">&#x27;xx&#x27;</span>) <span class="comment">// 解构某一个导出</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h4><ul>
+<li><p>常用于：不常用，<code>CommonJs的浏览器端实现</code></p>
+</li>
+<li><p>特点： </p>
+<ul>
+<li><code>异步加载</code>：因为面向浏览器端，为了不影响渲染肯定是异步加载</li>
+<li><code>依赖前置</code>：所有的依赖必须写在最初的依赖数组中，速度快，但是会浪费资源，预先加载了所有依赖不管你是否用到</li>
+</ul>
+<p>语法：</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 导出：通过define来定义模块  </span></span><br><span class="line"><span class="comment">// 如果该模块还依赖其他模块，则将模块的路径填入第一个参数的数组中  </span></span><br><span class="line"><span class="title function_">define</span>([<span class="string">&#x27;x&#x27;</span>], <span class="keyword">function</span>(<span class="params">x</span>)&#123;  </span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;  </span><br><span class="line">      <span class="keyword">return</span> x.<span class="title function_">fn</span>() + <span class="number">1</span>  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> &#123;  </span><br><span class="line">      <span class="attr">foo</span>: foo  </span><br><span class="line">  &#125;;  </span><br><span class="line">&#125;);  </span><br><span class="line"><span class="comment">// 2. 引用  </span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">&#x27;a&#x27;</span>], <span class="keyword">function</span> (<span class="params">a</span>)&#123;  </span><br><span class="line">  a.<span class="title function_">foo</span>()  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h4><ul>
+<li><p>常用于：不常用，<code>根据CommonJs和AMD实现，优化了加载方式</code></p>
+</li>
+<li><p>特点： </p>
+<ul>
+<li><code>异步加载</code></li>
+<li><code>按需加载/依赖就近</code>：用到了再引用依赖，方便了开发，缺点是速度和性能较差</li>
+</ul>
+<p>语法：</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 导出：通过define来定义模块  </span></span><br><span class="line"><span class="comment">// 如果该模块还依赖其他模块，在用到的地方引用即可  </span></span><br><span class="line"><span class="title function_">define</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;  </span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;  </span><br><span class="line">      <span class="keyword">var</span> x = <span class="built_in">require</span>(<span class="string">&#x27;x&#x27;</span>)  </span><br><span class="line">      <span class="keyword">return</span> x.<span class="title function_">fn</span>() + <span class="number">1</span>  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> &#123;  </span><br><span class="line">      <span class="attr">foo</span>: foo  </span><br><span class="line">  &#125;;  </span><br><span class="line">&#125;);  </span><br><span class="line"><span class="comment">// 2. 引用  </span></span><br><span class="line"><span class="keyword">var</span> x = <span class="built_in">require</span>(<span class="string">&#x27;a&#x27;</span>);  </span><br><span class="line">a.<span class="title function_">foo</span>();</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="ES-module"><a href="#ES-module" class="headerlink" title="ES module"></a>ES module</h4><ul>
+<li>常用于：<code>目前浏览器端的默认标准</code></li>
+<li>特点：<code>静态编译：</code> 在编译的时候就能确定依赖关系，以及输入和输出的变量</li>
+<li>语法：</li>
+</ul>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 导出：通过export 或 export default 输出模块  </span></span><br><span class="line"><span class="comment">// 写法1: 边声明，边导出  </span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> m = <span class="number">1</span>;  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">m</span>(<span class="params"></span>) &#123;&#125;;  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">M</span> &#123;&#125;;  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法2：导出一个接口 export &#123;&#125;，形似导出对象但不是, 本质上是引用集合，最常用的导出方法  </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;  </span><br><span class="line">  attr1,  </span><br><span class="line">  attr2  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法3：默认导出  </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> fn  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 引用  </span></span><br><span class="line"><span class="keyword">import</span> &#123; x &#125; <span class="keyword">from</span> <span class="string">&#x27;test.js&#x27;</span> <span class="comment">// 导出模块中对应的值，必须知道值在模块中导出时的名字  </span></span><br><span class="line"><span class="keyword">import</span> &#123; x <span class="keyword">as</span> myx &#125; <span class="keyword">from</span> <span class="string">&#x27;test.js&#x27;</span> <span class="comment">// 改名字  </span></span><br><span class="line"><span class="keyword">import</span> x <span class="keyword">from</span> <span class="string">&#x27;test.js&#x27;</span> <span class="comment">// 默认导出的引用方式  </span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>注意</strong></p>
+<ol>
+<li><code>export default</code>在同一个文件中只可存在一个（一个模块只能有一个默认输出）</li>
+<li>一个模块中可以同时使用export default 和 export</li>
+</ol>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 模块 test.js</span></span><br><span class="line"><span class="keyword">var</span> info = &#123;  </span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;name&#x27;</span>,  </span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> info  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> name= <span class="string">&#x27;海洋饼干&#x27;</span>  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> age = <span class="number">18</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用  </span></span><br><span class="line"><span class="keyword">import</span> person, &#123;name, age <span class="keyword">as</span> myAge&#125; <span class="keyword">from</span> <span class="string">&#x27;test.js&#x27;</span>  </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person); <span class="comment">// &#123; name: &#x27;name&#x27;, age: 18 &#125;  </span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name+ <span class="string">&#x27;=&#x27;</span> + myAge); <span class="comment">// 海洋饼干=18</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
   </entry>
 </search>
