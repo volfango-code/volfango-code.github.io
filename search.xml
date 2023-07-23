@@ -327,6 +327,257 @@
   <entry>
     <title>前端如何选择图片的格式</title>
     <url>/2023/07/23/%E5%89%8D%E7%AB%AF%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%9B%BE%E7%89%87%E7%9A%84%E6%A0%BC%E5%BC%8F/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>图片的类型目前就分为两种：</p>
+<ul>
+<li>位图</li>
+<li>矢量图</li>
+</ul>
+<p><strong>位图</strong></p>
+<p>所谓位图就是用像素点拼起来的图也叫点阵图，平时我们用到的png、jpg等图片就是位图。</p>
+<p><strong>矢量图</strong></p>
+<p>矢量图，也叫做向量图。矢量图并不纪录画面上每一点的信息，而是纪录了元素形状及颜色的算法，当你打开一幅矢量图的时候，软件对图形对应的函数进行运算，将运算结果图形的形状和颜色显示给你看。 </p>
+<p>无论显示画面是大还是小，画面上的对象对应的算法是不变的，所以，即使对画面进行倍数相当大的缩放，它也不会像位图那样会失真。</p>
+<p>常见的就是svg格式的。</p>
+<h4 id="图片的压缩类型"><a href="#图片的压缩类型" class="headerlink" title="图片的压缩类型"></a>图片的压缩类型</h4><ul>
+<li>无压缩</li>
+<li>有损压缩</li>
+<li>无损压缩</li>
+</ul>
+<p><strong>无压缩</strong></p>
+<p>无压缩的图片格式不对图片数据进行压缩处理，能准确地呈现原图片。例如BMP格式的图片。 </p>
+<p><strong>有损压缩</strong></p>
+<p>指在压缩文件大小的过程中，损失了一部分图片的信息，即降低了图片的质量（图片被压糊了），并且这种损失是不可逆的。 </p>
+<p>常见的有损压缩手段是按照一定的算法将临近的像素点进行合并。压缩算法不会对图片所有的数据进行编码压缩，而是在压缩的时候，去除了人眼无法识别的图片细节。因此有损压缩可以在同等图片质量的情况下大幅降低图片的体积。例如jpg格式的图片使用的就是有损压缩。 </p>
+<p><strong>无损压缩</strong></p>
+<p>在压缩图片的过程中，图片的质量没有任何损耗。我们任何时候都可以从无损压缩过的图片中恢复出原来的信息。 </p>
+<p>压缩算法对图片的所有的数据进行编码压缩，能在保证图片的质量的同时降低图片的体积。例如png、gif使用的就是无损压缩。 </p>
+<h4 id="图片位数"><a href="#图片位数" class="headerlink" title="图片位数"></a>图片位数</h4><p>图片位数通常分为8、16、24、32</p>
+<ul>
+<li>图片位数越大，能表示的颜色越多，同时占用的体积也约大。例如8位图片支持256种颜色，即2的8次方。</li>
+<li>图片位数越大，颜色过渡也就越细腻，携带的色彩信息可以更加丰富。</li>
+<li>32位跟24位的区别就是多了一个Alpha通道，用来支持半透明，其他的跟24位基本一样。</li>
+</ul>
+<h4 id="常见的图片的格式"><a href="#常见的图片的格式" class="headerlink" title="常见的图片的格式"></a>常见的图片的格式</h4><p><strong>GIF</strong></p>
+<p>GIF的全称是<code>Graphics Interchange Format</code>，可译为图形交换格式，是在1987年由Compu Serve公司为了填补跨平台图像格式的空白而发展起来的。</p>
+<p>GIF采用的是Lempel-Zev-Welch（LZW）压缩算法，最高支持256种颜色。由于这种特性，GIF比较适用于色彩较少的图片，比如卡通造型、公司标志等等。如果碰到需要用24位真彩色的场合，那么GIF的表现力就有限了。</p>
+<p>GIF格式图片最大的特性是帧动画，相比古老的bmp格式，尺寸较小，而且支持透明( 不支持半透明，因为不支持 Alpha 透明通道 )和动画。</p>
+<p>优点：</p>
+<ul>
+<li>体积小</li>
+<li>支持动画</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>由于采用了8位压缩，最多只能处理256种颜色</li>
+</ul>
+<p><strong>JPEG&#x2F;JPG</strong></p>
+<p>JPEG是<code>Joint Photographic Experts Group</code>(联合图像专家组)的缩写，文件后辍名为”．jpg”或”．jpeg”，是常用的图像文件格式，由一个软件开发联合会组织制定，是一种有损压缩格式，能够将图像压缩在很小的储存空间，图像中重复或不重要的资料会被丢失，因此容易造成图像数据的损伤。尤其是使用过高的压缩比例，将使最终解压缩后恢复的图像质量明显降低，如果追求高品质图像，不宜采用过高压缩比例。 </p>
+<p>优点：</p>
+<ul>
+<li>采用有损压缩，压缩后体积更小</li>
+<li>支持24位真彩色</li>
+<li>支持渐进式加载</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>有损压缩会损坏图片的质量</li>
+<li>不支持透明&#x2F;半透明</li>
+</ul>
+<p><strong>渐进式jpeg(progressive jpeg)</strong></p>
+<p>渐进式jpg文件包含多次扫描，这些扫描顺寻的存储在jpg文件中。打开文件过程中，会先显示整个图片的模糊轮廓，随着扫描次数的增加，图片变得越来越清晰。 </p>
+<p>PNG</p>
+<p>png，即便携式网络图形是一种无损压缩的位图片形格式，其设计目的是试图替代GIF和TIFF文件格式，同时增加一些GIF文件格式所不具备的特性。PNG使用从LZ77派生的无损数据压缩算法，一般应用于JAVA程序、网页或S60程序中，原因是它压缩比高，生成文件体积小。</p>
+<p>png支持8位、24位、32位3种，我们通常叫它们png8、png24、png32。</p>
+<p>优点：</p>
+<ul>
+<li>无损压缩</li>
+<li>支持透明、半透明</li>
+<li>最高支持24位真彩色图像以及8位灰度图像，从而彻底地消除锯齿边缘。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>与jpg的有损耗压缩相比，png提供的压缩量较少</li>
+<li>不支持动画，如需支持动画还得使用apng</li>
+</ul>
+<p><strong>APNG</strong></p>
+<p>APNG（Animated Portable Network Graphics）是一个基于PNG（Portable Network Graphics）的位图动画格式。实际上就是多张png组成的动图。MAC电脑打开可以看到组成apng的每一张图。</p>
+<p>优点：</p>
+<ul>
+<li>支持png的所有优点</li>
+<li>支持动画</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>浏览器支持情况较差</li>
+</ul>
+<p><strong>WEBP</strong></p>
+<p>WebP是由Google最初在2010年发布，目标是减少文件大小。它能同时支持无损压缩和有损压缩。</p>
+<p>它几乎集成了以上所有图片的优点，并且能够拥有更高的压缩率，但是浏览器支持率还不够理想。</p>
+<p><strong>SVG</strong></p>
+<p>SVG是一种用XML定义的语言，用来描述二维矢量及矢量&#x2F;栅格图形。SVG提供了3种类型的图形对象：矢量图形（例如：由直线和曲线组成的路径）、图象、文本。图形对象还可进行分组、添加样式、变换、组合等操作，特征集包括嵌套变换、剪切路径、alpha蒙板、滤镜效果、模板对象和其它扩展。</p>
+<p>SVG图形是可交互的和动态的，可以在SVG文件中嵌入动画元素或通过脚本来定义动画。</p>
+<p>SVG与上面图片不同的是它是矢量图，无论你怎么放大，它都不会失真；同时，SVG文件通常要比JPEG和PNG格式的文件要小很多。</p>
+<p>优点：</p>
+<ul>
+<li>SVG 可被非常多的工具读取和修改（比如记事本）</li>
+<li>SVG 与 JPEG 和 GIF 图像比起来，尺寸更小，且可压缩性更强。</li>
+<li>SVG 是可伸缩</li>
+<li>SVG 图像可在任何的分辨率下被高质量地打印</li>
+<li>SVG 可在图像质量不下降的情况下被放大</li>
+<li>SVG 可以与 JavaScript 技术一起运行</li>
+<li>SVG 文件是纯粹的 XML</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>渲染成本相对于其他格式图片比较高，对于性能有影响。</li>
+<li>需要学习成本，因为SVG是一种用XML定义的语言。</li>
+</ul>
+<h4 id="如何选择图片的格式"><a href="#如何选择图片的格式" class="headerlink" title="如何选择图片的格式"></a>如何选择图片的格式</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../media/images/articles/%E5%89%8D%E7%AB%AF%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%9B%BE%E7%89%87%E7%9A%84%E6%A0%BC%E5%BC%8F-01.png"
+                      alt="前端如何选择图片的格式-01"
+                ></p>
+]]></content>
+      <tags>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue组件间通信方式</title>
+    <url>/2023/07/23/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="一、组件间通信的分类"><a href="#一、组件间通信的分类" class="headerlink" title="一、组件间通信的分类"></a>一、组件间通信的分类</h4><p>组件间通信的分类可以分成以下</p>
+<ul>
+<li>父子组件之间的通信</li>
+<li>兄弟组件之间的通信</li>
+<li>祖孙与后代组件之间的通信</li>
+<li>非关系组件间之间的通信</li>
+</ul>
+<p>关系图:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../media/images/articles/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F-01.png"
+                      alt="Vue组件间通信方式-01"
+                ></p>
+<h4 id="二、组件间通信的方案"><a href="#二、组件间通信的方案" class="headerlink" title="二、组件间通信的方案"></a>二、组件间通信的方案</h4><p>整理<code>vue</code>中8种常规的通信方案</p>
+<ol>
+<li>通过 props 传递</li>
+<li>通过 $emit 触发自定义事件</li>
+<li>使用 ref</li>
+<li>EventBus</li>
+<li>$parent 或$root</li>
+<li>attrs 与 listeners</li>
+<li>Provide 与 Inject</li>
+<li>Vuex</li>
+</ol>
+<p><strong>props传递数据</strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../media/images/articles/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F-02.png"
+                      alt="Vue组件间通信方式-02"
+                ></p>
+<ul>
+<li>适用场景：父组件传递数据给子组件</li>
+<li>子组件设置<code>props</code>属性，定义接收父组件传递过来的参数</li>
+<li>父组件在使用子组件标签中通过字面量来传递值</li>
+</ul>
+<p><code>Children.vue </code></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">props</span>:&#123;  </span><br><span class="line"> <span class="comment">// 字符串形式  </span></span><br><span class="line"> <span class="attr">name</span>:<span class="title class_">String</span>, <span class="comment">// 接收的类型参数  </span></span><br><span class="line"> <span class="comment">// 对象形式  </span></span><br><span class="line"> <span class="attr">age</span>:&#123;    </span><br><span class="line">     <span class="attr">type</span>:<span class="title class_">Number</span>, <span class="comment">// 接收的类型为数值  </span></span><br><span class="line">     <span class="attr">defaule</span>:<span class="number">18</span>,  <span class="comment">// 默认值为18  </span></span><br><span class="line">     <span class="attr">require</span>:<span class="literal">true</span> <span class="comment">// age属性必须传递  </span></span><br><span class="line">  &#125;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div>
+
+<p><code>Father.vue</code></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Children</span> name=<span class="string">&quot;jack&quot;</span> age=<span class="number">18</span> /&gt;  </span><br></pre></td></tr></table></figure></div>
+
+<p><strong>$emit 触发自定义事件</strong></p>
+<ul>
+<li>适用场景：子组件传递数据给父组件</li>
+<li>子组件通过<code>$emit触发</code>自定义事件，<code>$emit</code>第二个参数为传递的数值</li>
+<li>父组件绑定监听器获取到子组件传递过来的参数</li>
+</ul>
+<p><code>Children.vue </code></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.$emit(<span class="string">&#x27;add&#x27;</span>, good)</span><br></pre></td></tr></table></figure></div>
+
+<p><code>Father.vue </code></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Children</span> @add=<span class="string">&quot;cartAdd($event)&quot;</span> /&gt;  </span><br></pre></td></tr></table></figure></div>
+
+<p><strong>ref</strong></p>
+<ul>
+<li>父组件在使用子组件的时候设置<code>ref</code></li>
+<li>父组件通过设置子组件<code>ref</code>来获取数据</li>
+</ul>
+<p>父组件</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Children</span> ref=<span class="string">&quot;foo&quot;</span> /&gt;  </span><br><span class="line">  </span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">foo</span>  <span class="comment">// 获取子组件实例，通过子组件实例就能拿到对应的数据  </span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>EventBus</strong></p>
+<ul>
+<li>使用场景：兄弟组件传值</li>
+<li>创建一个中央事件总线<code>EventBus</code></li>
+<li>兄弟组件通过<code>$emit</code>触发自定义事件，<code>$emit</code>第二个参数为传递的数值</li>
+<li>另一个兄弟组件通过<code>$on</code>监听自定义事件</li>
+</ul>
+<p><code>Bus.js </code></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建一个中央时间总线类  </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bus</span> &#123;  </span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;  </span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">callbacks</span> = &#123;&#125;;   <span class="comment">// 存放事件的名字  </span></span><br><span class="line">  &#125;  </span><br><span class="line">  $on(name, fn) &#123;  </span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">callbacks</span>[name] = <span class="variable language_">this</span>.<span class="property">callbacks</span>[name] || [];  </span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">callbacks</span>[name].<span class="title function_">push</span>(fn);  </span><br><span class="line">  &#125;  </span><br><span class="line">  $emit(name, args) &#123;  </span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">callbacks</span>[name]) &#123;  </span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">callbacks</span>[name].<span class="title function_">forEach</span>(<span class="function">(<span class="params">cb</span>) =&gt;</span> <span class="title function_">cb</span>(args));  </span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// main.js  </span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$bus</span> = <span class="keyword">new</span> <span class="title class_">Bus</span>() <span class="comment">// 将$bus挂载到vue实例的原型上  </span></span><br><span class="line"><span class="comment">// 另一种方式  </span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$bus</span> = <span class="keyword">new</span> <span class="title class_">Vue</span>() <span class="comment">// Vue已经实现了Bus的功能  </span></span><br></pre></td></tr></table></figure></div>
+
+<p><code>Children1.vue </code></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$bus</span>.$emit(<span class="string">&#x27;foo&#x27;</span>)  </span><br></pre></td></tr></table></figure></div>
+
+<p><code>Children2.vue </code></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$bus</span>.$on(<span class="string">&#x27;foo&#x27;</span>, <span class="variable language_">this</span>.<span class="property">handle</span>)  </span><br></pre></td></tr></table></figure></div>
+
+<p><strong>$parent 或 $root</strong></p>
+<ul>
+<li>通过共同祖辈<code>$parent</code>或者<code>$root</code>搭建通信侨联</li>
+</ul>
+<p>兄弟组件</p>
+<p><code>this.$parent.$on(&#39;add&#39;,this.add)</code></p>
+<p>另一个兄弟组件</p>
+<p><code>this.$parent.$emit(&#39;add&#39;)</code></p>
+<p><strong>$attrs 与 $listeners</strong></p>
+<ul>
+<li>适用场景：祖先传递数据给子孙</li>
+<li>设置批量向下传属性<code>$attrs</code>和 <code>$listeners</code></li>
+<li>包含了父级作用域中不作为 <code>prop</code> 被识别 (且获取) 的特性绑定 ( class 和 style 除外)。</li>
+<li>可以通过 <code>v-bind=&quot;$attrs&quot;</code> 传⼊内部组件</li>
+</ul>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// child：并未在props中声明foo  </span></span><br><span class="line">&lt;p&gt;&#123;&#123;$attrs.<span class="property">foo</span>&#125;&#125;&lt;/p&gt;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// parent  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">HelloWorld</span> <span class="attr">foo</span>=<span class="string">&quot;foo&quot;</span>/&gt;</span></span>  </span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 给Grandson隔代传值，communication/index.vue  </span></span><br><span class="line">&lt;<span class="title class_">Child2</span> msg=<span class="string">&quot;lalala&quot;</span> @some-event=<span class="string">&quot;onSomeEvent&quot;</span>&gt;&lt;/<span class="title class_">Child2</span>&gt;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Child2做展开  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">Grandson</span> <span class="attr">v-bind</span>=<span class="string">&quot;$attrs&quot;</span> <span class="attr">v-on</span>=<span class="string">&quot;$listeners&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">Grandson</span>&gt;</span></span>  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Grandson使⽤  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> @<span class="attr">click</span>=<span class="string">&quot;$emit(&#x27;some-event&#x27;, &#x27;msg from grandson&#x27;)&quot;</span>&gt;</span>  </span></span><br><span class="line"><span class="language-xml">&#123;&#123;msg&#125;&#125;  </span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span> </span><br></pre></td></tr></table></figure></div>
+
+<h4 id="provide-与-inject"><a href="#provide-与-inject" class="headerlink" title="provide 与 inject"></a>provide 与 inject</h4><ul>
+<li>在祖先组件定义<code>provide</code>属性，返回传递的值</li>
+<li>在后代组件通过<code>inject</code>接收组件传递过来的值</li>
+</ul>
+<p>祖先组件</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">provide</span>(<span class="params"></span>)&#123;  </span><br><span class="line">    <span class="keyword">return</span> &#123;  </span><br><span class="line">        <span class="attr">foo</span>:<span class="string">&#x27;foo&#x27;</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></div>
+
+<p>后代组件 </p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">inject</span>:[<span class="string">&#x27;foo&#x27;</span>] <span class="comment">// 获取到祖先组件传递过来的值</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a>vuex</h4><ul>
+<li>适用场景: 复杂关系的组件数据传递</li>
+<li><code>Vuex</code>作用相当于一个用来存储共享变量的容器</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../media/images/articles/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F-03.png"
+                      alt="Vue组件间通信方式-03"
+                ></p>
+<ul>
+<li><code>state</code>用来存放共享变量的地方</li>
+<li><code>getter</code>，可以增加一个<code>getter</code>派生状态，(相当于<code>store</code>中的计算属性），用来获得共享变量的值</li>
+<li><code>mutations</code>用来存放修改<code>state</code>的方法。</li>
+<li><code>actions</code>也是用来存放修改state的方法，不过<code>action</code>是在<code>mutations</code>的基础上进行。常用来做一些异步操作</li>
+</ul>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>父子关系的组件数据传递选择 <code>props</code>  与 <code>$emit</code>进行传递，也可选择<code>ref</code></li>
+<li>兄弟关系的组件数据传递可选择<code>$bus</code>，其次可以选择<code>$parent</code>进行传递</li>
+<li>祖先与后代组件数据传递可选择<code>attrs</code>与<code>listeners</code>或者 <code>Provide</code>与 <code>Inject</code></li>
+<li>复杂关系的组件数据传递可以通过<code>vuex</code>存放共享的变量</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
   </entry>
 </search>
