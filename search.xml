@@ -78,4 +78,255 @@
         <tag>JavaScript</tag>
       </tags>
   </entry>
+  <entry>
+    <title>触发BFC的方式以及应用场景</title>
+    <url>/2023/07/23/%E8%A7%A6%E5%8F%91BFC%E7%9A%84%E6%96%B9%E5%BC%8F%E4%BB%A5%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</url>
+    <content><![CDATA[<h4 id="文档流"><a href="#文档流" class="headerlink" title="文档流"></a>文档流</h4><p>常说的文档流其实分为<code>定位流</code>、<code>浮动流</code>、<code>普通流</code>三种 </p>
+<h4 id="绝对定位（-Absolute-positioning-）"><a href="#绝对定位（-Absolute-positioning-）" class="headerlink" title="绝对定位（ Absolute positioning ）"></a>绝对定位（ Absolute positioning ）</h4><p>如果元素的属性 <code>position</code> 为 <code>absolute</code> 或 <code>fixed</code>，它就是一个绝对定位元素。 </p>
+<p>在绝对定位布局中，元素会整体脱离普通流，因此绝对定位元素不会对其兄弟元素造成影响，而元素具体的位置由绝对定位的坐标决定。 </p>
+<p>它的定位相对于它的包含块，相关CSS属性：<code>top</code>、<code>bottom</code>、<code>left</code>、<code>right</code>； </p>
+<p>对于 <code>position: absolute</code>，元素定位将相对于上级元素中最近的一个<code>relative、fixed、absolute</code>，如果没有则相对于body； </p>
+<p>对于 <code>position:fixed</code>，正常来说是相对于浏览器窗口定位的，但是当<strong>元素祖先的 transform 属性非 none 时，会相对于该祖先进行定位</strong>。 </p>
+<h4 id="浮动（-float-）"><a href="#浮动（-float-）" class="headerlink" title="浮动（ float ）"></a>浮动（ float ）</h4><p>在浮动布局中，元素首先按照普通流的位置出现，然后根据浮动的方向尽可能的向左边或右边偏移，其效果与印刷排版中的文本环绕相似。 </p>
+<h4 id="普通流（-normal-flow-）"><a href="#普通流（-normal-flow-）" class="headerlink" title="普通流（ normal flow ）"></a>普通流（ normal flow ）</h4><p>普通流其实就是指BFC中的FC。FC<code>Formatting Context</code>，直译过来是格式化上下文，它是页面中的一块渲染区域，有一套渲染规则，决定了其子元素如何布局，以及和其他元素之间的关系和作用。 </p>
+<p>在普通流中，元素按照其在 HTML 中的先后位置至上而下布局，在这个过程中，行内元素水平排列，直到当行被占满然后换行。块级元素则会被渲染为完整的一个新行。 </p>
+<p>除非另外指定，否则所有元素默认都是普通流定位，也可以说，普通流中元素的位置由该元素在 HTML 文档中的位置决定。 </p>
+<h4 id="BFC-概念"><a href="#BFC-概念" class="headerlink" title="BFC 概念"></a>BFC 概念</h4><p>MDN上关于BFC的定义： </p>
+<blockquote>
+<p>块格式化上下文（<code>Block Formatting Context</code>，<code>BFC</code>） 是Web页面的可视CSS渲染的一部分，是块盒子的布局过程发生的区域，也是浮动元素与其他元素交互的区域。 </p>
+</blockquote>
+<p>具有 <code>BFC</code> 特性的元素可以看作是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且 <code>BFC</code> 具有普通容器所没有的一些特性。 </p>
+<p>通俗一点来讲，可以把 <code>BFC</code> 理解为一个封闭的大箱子，箱子内部的元素无论如何翻江倒海，都不会影响到外部。 </p>
+<p>除了 BFC，还有：</p>
+<ul>
+<li><code>IFC</code>（行级格式化上下文）- <code>inline</code> 内联</li>
+<li><code>GFC</code>（网格布局格式化上下文）- <code>display: grid</code></li>
+<li><code>FFC</code>（自适应格式化上下文）- <code>display: flex</code>或<code>display: inline-flex</code></li>
+</ul>
+<p><strong>注意</strong>：同一个元素不能同时存在于两个 <code>BFC</code> 中。 </p>
+<h4 id="BFC的触发方式"><a href="#BFC的触发方式" class="headerlink" title="BFC的触发方式"></a>BFC的触发方式</h4><p>MDN上对于<a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Block_formatting_context">BFC的触发条件</a>写的很多，总结一下常见的触发方式有（只需要满足一个条件即可触发 BFC 的特性）：</p>
+<ul>
+<li>根元素，即 <code>&lt;html&gt;</code></li>
+<li>浮动元素：<code>float</code> 值为 <code>left</code> 、<code>right</code></li>
+<li><code>overflow</code> 值不为 <code>visible</code>，即为 <code>auto</code>、<code>scroll</code>、<code>hidden</code></li>
+<li><code>display</code> 值为 <code>inline-block</code>、<code>table-cell</code>、<code>table-caption</code>、<code>table</code>、<code>inline-table</code>、<code>flex</code>、<code>inline-flex</code>、<code>grid</code>、<code>inline-grid</code></li>
+<li>绝对定位元素：<code>position</code> 值为 <code>absolute</code>、<code>fixed</code></li>
+</ul>
+<h4 id="BFC的特性"><a href="#BFC的特性" class="headerlink" title="BFC的特性"></a>BFC的特性</h4><ul>
+<li>BFC 是页面上的一个独立容器，容器里面的子元素不会影响外面的元素。</li>
+<li>BFC 内部的块级盒会在垂直方向上一个接一个排列</li>
+<li>同一 BFC 下的相邻块级元素可能发生外边距折叠，创建新的 BFC 可以避免外边距折叠</li>
+<li>每个元素的外边距盒（<code>margin box</code>）的左边与包含块边框盒（<code>border box</code>）的左边相接触（从右向左的格式的话，则相反），即使存在浮动</li>
+<li>浮动盒的区域不会和 BFC 重叠</li>
+<li>计算 BFC 的高度时，浮动元素也会参与计算</li>
+</ul>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>BFC是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面元素，反之亦然。我们可以利用BFC的这个特性来做很多事。 </p>
+<p><strong>自适应两列布局</strong></p>
+<p>左列浮动（ 定宽或不定宽都可以 ），给右列开启 BFC。 </p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span>浮动元素，无固定宽度<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span>自适应<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">margin-right</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>效果： </p>
+<ul>
+<li>将左列设为左浮动，将自身高度塌陷，使得其它块级元素可以和它占据同一行的位置。</li>
+<li>右列为 div 块级元素，利用其自身的流特性占满整行。</li>
+<li>右列设置overflow: hidden,触发 BFC 特性，使其自身与左列的浮动元素隔离开，不占满整行。</li>
+</ul>
+<p><strong>防止外边距（ margin ）重叠</strong></p>
+<p>兄弟元素之间的外边距重叠 </p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;child1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;child2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child1</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child2</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>效果： </p>
+<p>两个块级元素，红色 div 距离底部 10px，绿色 div 距离顶部 20px，按道理应该两个块级元素相距 30px 才对，但实际却是取距离较大的一个，即 20px。 </p>
+<blockquote>
+<p>块级元素的上外边距和下外边距有时会合并（或折叠）为一个外边距，其大小取其中的较大者，这种行为称为外边距折叠（重叠），注意这个是发生在属于同一 BFC 下的块级元素之间 </p>
+</blockquote>
+<p>根据 BFC 特性，创建一个新的 BFC 就不会发生 margin 折叠了。比如我们在他们两个 div 外层再包裹一层容器，加属性 <code>overflow: hidden</code>，触发 BFC，那么两个 div 就不属于同个 BFC 了。 </p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;parent&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;child1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;parent&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;child2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>关于兄弟元素外边距叠加的问题，除了触发 BFC 也有其他方案，比如你统一只用上边距或下边距，就不会有上面的问题。 </p>
+<h4 id="父子元素的外边距重叠"><a href="#父子元素的外边距重叠" class="headerlink" title="父子元素的外边距重叠"></a>父子元素的外边距重叠</h4><p>这种情况存在父元素与其第一个或最后一个子元素之间（ 嵌套元素 ）。 </p>
+<p>如果在父元素与其第一个&#x2F;最后一个子元素之间不存在边框、内边距、行内内容，也没有创建块格式化上下文、或者清除浮动将两者的外边距 分开，此时子元素的外边距会“溢出”到父元素的外面。 </p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;parent&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;child&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#parent</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: green;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#child</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>红色的 div 在绿色的 div 内部，且设置了 <code>margin-top</code> 为 30px，但我们发现红色 div 的顶部与绿色 div 顶部重合，并没有距离顶部 30px，而是溢出到父元素的外面计算。即本来父元素距离顶部只有 20px，被子元素溢出影响，外边距重叠，取较大的值，则距离顶部 30px。 </p>
+<p>解决办法：</p>
+<ul>
+<li>给父元素触发 BFC（ 如添加overflow: hidden ）</li>
+<li>给父元素添加 border</li>
+<li>给父元素添加 padding</li>
+</ul>
+<h4 id="清除浮动解决令父元素高度坍塌的问题"><a href="#清除浮动解决令父元素高度坍塌的问题" class="headerlink" title="清除浮动解决令父元素高度坍塌的问题"></a>清除浮动解决令父元素高度坍塌的问题</h4><p>当容器内子元素设置浮动时，脱离了文档流，容器中总父元素高度只有边框部分高度。 </p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;parent&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;child&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">4px</span> solid red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>解决办法：给父元素触发 BFC，使其有 BFC 特性：<strong>计算 BFC 的高度时，浮动元素也会参与计算</strong> </p>
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">4px</span> solid red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>上面我们都是用的 <code>overflow: hidden</code> 触发 BFC，因为确实常用，但是触发 BFC 也不止是只有这一种方法。 </p>
+<p>如上面写的所示，可以设置<code>float: left;</code>，<code>float: right;</code>，<code>display: inline-block;</code>，<code>overflow: auto;</code>，<code>display: flex;</code>，<code>display: table;</code>，<code>position</code> 为 <code>absolute</code> 或 <code>fixed</code> 等等，这些都可以触发，不过父元素宽度表现不一定相同，但父元素高度都被撑出来了。 </p>
+<p>实际运用还是根据场景选择。 </p>
+]]></content>
+      <tags>
+        <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>理解回流重绘以及触发场景</title>
+    <url>/2023/07/23/%E7%90%86%E8%A7%A3%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF/</url>
+    <content><![CDATA[<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../media/images/articles/%E7%90%86%E8%A7%A3%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF-01.png"
+                      alt="理解回流重绘以及触发场景-01"
+                ></p>
+<h4 id="一、是什么"><a href="#一、是什么" class="headerlink" title="一、是什么"></a>一、是什么</h4><p>在<code>HTML</code>中，每个元素都可以理解成一个盒子，在浏览器解析过程中，会涉及到回流与重绘：</p>
+<ul>
+<li>回流：布局引擎会根据各种样式计算每个盒子在页面上的大小与位置</li>
+<li>重绘：当计算好盒模型的位置、大小及其他属性后，浏览器根据每个盒子特性进行绘制</li>
+</ul>
+<p>具体的浏览器解析渲染机制如下所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../media/images/articles/%E7%90%86%E8%A7%A3%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF-02.png"
+                      alt="理解回流重绘以及触发场景-02"
+                ></p>
+<ul>
+<li>解析HTML，生成DOM树，解析CSS，生成CSSOM树</li>
+<li>将DOM树和CSSOM树结合，生成渲染树(Render Tree)</li>
+<li>Layout(回流):根据生成的渲染树，进行回流(Layout)，得到节点的几何信息（位置，大小）</li>
+<li>Painting(重绘):根据渲染树以及回流得到的几何信息，得到节点的绝对像素</li>
+<li>Display:将像素发送给GPU，展示在页面上</li>
+</ul>
+<p>在页面初始渲染阶段，回流不可避免的触发，可以理解成页面一开始是空白的元素，后面添加了新的元素使页面布局发生改变</p>
+<p>当我们对 <code>DOM</code> 的修改引发了 <code>DOM </code>几何尺寸的变化（比如修改元素的宽、高或隐藏元素等）时，浏览器需要重新计算元素的几何属性，然后再将计算的结果绘制出来</p>
+<p>当我们对 <code>DOM </code>的修改导致了样式的变化（<code>color</code>或<code>background-color</code>），却并未影响其几何属性时，浏览器不需重新计算元素的几何属性、直接为该元素绘制新的样式，这里就仅仅触发了重绘</p>
+<h4 id="二、如何触发"><a href="#二、如何触发" class="headerlink" title="二、如何触发"></a>二、如何触发</h4><p>要想减少回流和重绘的次数，首先要了解回流和重绘是如何触发的 </p>
+<p><strong>回流触发时机</strong></p>
+<p>回流这一阶段主要是计算节点的位置和几何信息，那么当页面布局和几何信息发生变化的时候，就需要回流，如下面情况：</p>
+<ul>
+<li>添加或删除可见的DOM元素</li>
+<li>元素的位置发生变化</li>
+<li>元素的尺寸发生变化（包括外边距、内边框、边框大小、高度和宽度等）</li>
+<li>内容发生变化，比如文本变化或图片被另一个不同尺寸的图片所替代</li>
+<li>页面一开始渲染的时候（这避免不了）</li>
+<li>浏览器的窗口尺寸变化（因为回流是根据视口的大小来计算元素的位置和大小的）</li>
+</ul>
+<p>还有一些容易被忽略的操作：获取一些特定属性的值</p>
+<blockquote>
+<p>offsetTop、offsetLeft、 offsetWidth、offsetHeight、scrollTop、scrollLeft、scrollWidth、scrollHeight、clientTop、clientLeft、clientWidth、clientHeight</p>
+</blockquote>
+<p>这些属性有一个共性，就是需要通过即时计算得到。因此浏览器为了获取这些值，也会进行回流</p>
+<p>除此还包括<code>getComputedStyle </code>方法，原理是一样的</p>
+<p><strong>重绘触发时机</strong></p>
+<p>触发回流一定会触发重绘</p>
+<p>可以把页面理解为一个黑板，黑板上有一朵画好的小花。现在我们要把这朵从左边移到了右边，那我们要先确定好右边的具体位置，画好形状（回流），再画上它原有的颜色（重绘）</p>
+<p>除此之外还有一些其他引起重绘行为：</p>
+<ul>
+<li>颜色的修改</li>
+<li>文本方向的修改</li>
+<li>阴影的修改</li>
+</ul>
+<p><strong>浏览器优化机制</strong></p>
+<p>由于每次重排都会造成额外的计算消耗，因此大多数浏览器都会通过队列化修改并批量执行来优化重排过程。浏览器会将修改操作放入到队列里，直到过了一段时间或者操作达到了一个阈值，才清空队列</p>
+<p>当你获取布局信息的操作的时候，会强制队列刷新，包括前面讲到的<code>offsetTop</code>等方法都会返回最新的数据</p>
+<p>因此浏览器不得不清空队列，触发回流重绘来返回正确的值</p>
+<h4 id="三、如何减少"><a href="#三、如何减少" class="headerlink" title="三、如何减少"></a>三、如何减少</h4><p>我们了解了如何触发回流和重绘的场景，下面给出避免回流的经验：</p>
+<ul>
+<li>如果想设定元素的样式，通过改变元素的 <code>class</code> 类名 (尽可能在 DOM 树的最里层)</li>
+<li>避免设置多项内联样式</li>
+<li>应用元素的动画，使用 <code>position</code> 属性的 <code>fixed</code> 值或 <code>absolute</code> 值(如前文示例所提)</li>
+<li>避免使用 <code>table</code> 布局，<code>table</code> 中每个元素的大小以及内容的改动，都会导致整个 <code>table</code> 的重新计算</li>
+<li>对于那些复杂的动画，对其设置 <code>position: fixed/absolute</code>，尽可能地使元素脱离文档流，从而减少对其他元素的影响</li>
+<li>使用css3硬件加速，可以让<code>transform</code>、<code>opacity</code>、<code>filters</code>这些动画不会引起回流重绘</li>
+<li>避免使用 CSS 的 <code>JavaScript</code> 表达式</li>
+</ul>
+<p>在使用 <code>JavaScript</code> 动态插入多个节点时, 可以使用<code>DocumentFragment</code>. 创建后一次插入. 就能避免多次的渲染性能</p>
+<p>但有时候，我们会无可避免地进行回流或者重绘，我们可以更好使用它们</p>
+<p>例如，多次修改一个把元素布局的时候，我们很可能会如下操作</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;el&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) &#123;</span><br><span class="line">    el.<span class="property">style</span>.<span class="property">top</span>  = el.<span class="property">offsetTop</span>  + <span class="number">10</span> + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">    el.<span class="property">style</span>.<span class="property">left</span> = el.<span class="property">offsetLeft</span> + <span class="number">10</span> + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>每次循环都需要获取多次<code>offset</code>属性，比较糟糕，可以使用变量的形式缓存起来，待计算完毕再提交给浏览器发出重计算请求</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 缓存offsetLeft与offsetTop的值</span></span><br><span class="line"><span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;el&#x27;</span>) </span><br><span class="line"><span class="keyword">let</span> offLeft = el.<span class="property">offsetLeft</span>, offTop = el.<span class="property">offsetTop</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在JS层面进行计算</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) &#123;</span><br><span class="line">  offLeft += <span class="number">10</span></span><br><span class="line">  offTop  += <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一次性将计算结果应用到DOM上</span></span><br><span class="line">el.<span class="property">style</span>.<span class="property">left</span> = offLeft + <span class="string">&quot;px&quot;</span></span><br><span class="line">el.<span class="property">style</span>.<span class="property">top</span> = offTop  + <span class="string">&quot;px&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>我们还可避免改变样式，使用类名去合并样式 </p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;container&#x27;</span>)</span><br><span class="line">container.<span class="property">style</span>.<span class="property">width</span> = <span class="string">&#x27;100px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">height</span> = <span class="string">&#x27;200px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">border</span> = <span class="string">&#x27;10px solid red&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>使用类名去合并样式 </p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.basic_style</span> &#123;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">height</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">border</span>: <span class="number">10px</span> solid red;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">color</span>: red;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;container&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">    container.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;basic_style&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>前者每次单独操作，都去触发一次渲染树更改（新浏览器不会），</p>
+<p>都去触发一次渲染树更改，从而导致相应的回流与重绘过程</p>
+<p>合并之后，等于我们将所有的更改一次性发出</p>
+<p>我们还可以通过通过设置元素属性<code>display: none</code>，将其从页面上去掉，然后再进行后续操作，这些后续操作也不会触发回流与重绘，这个过程称为离线操作</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;container&#x27;</span>)</span><br><span class="line">container.<span class="property">style</span>.<span class="property">width</span> = <span class="string">&#x27;100px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">height</span> = <span class="string">&#x27;200px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">border</span> = <span class="string">&#x27;10px solid red&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>离线操作后 </p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> container = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;container&#x27;</span>)</span><br><span class="line">container.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&#x27;none&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">width</span> = <span class="string">&#x27;100px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">height</span> = <span class="string">&#x27;200px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">border</span> = <span class="string">&#x27;10px solid red&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span></span><br><span class="line">...（省略了许多类似的后续操作）</span><br><span class="line">container.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&#x27;block&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <tags>
+        <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>优化页面加载白屏时间</title>
+    <url>/2023/07/23/%E4%BC%98%E5%8C%96%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%99%BD%E5%B1%8F%E6%97%B6%E9%97%B4/</url>
+    <content><![CDATA[<h4 id="一、白屏时间"><a href="#一、白屏时间" class="headerlink" title="一、白屏时间"></a>一、白屏时间</h4><p>白屏时间：即用户点击一个链接或打开浏览器输入URL地址后，从屏幕空白到显示第一个画面的时间。 </p>
+<h4 id="二、白屏时间的重要性"><a href="#二、白屏时间的重要性" class="headerlink" title="二、白屏时间的重要性"></a>二、白屏时间的重要性</h4><p>当用户点开一个链接或者是直接在浏览器中输入URL开始进行访问时，就开始等待页面的展示。页面渲染的时间越短，用户等待的时间就越短，用户感知到页面的速度就越快。这样可以极大地<strong>提升用户的体验，减少用户的跳出，提升页面的留存率。</strong> </p>
+<h4 id="三、白屏的过程"><a href="#三、白屏的过程" class="headerlink" title="三、白屏的过程"></a>三、白屏的过程</h4><p>从输入url，到页面的画面展示的过程</p>
+<p>1、首先，在浏览器地址栏中输入url</p>
+<p>2、浏览器先查看浏览器缓存-系统缓存-路由器缓存，如果缓存中有，会直接在屏幕中显示页面内容。若没有，则跳到第三步操作。</p>
+<p>3、在发送http请求前，需要域名解析(DNS解析)，解析获取相应的IP地址。</p>
+<p>4、浏览器向服务器发起tcp连接，与浏览器建立tcp三次握手。</p>
+<p>5、握手成功后，浏览器向服务器发送http请求，请求数据包。</p>
+<p>6、服务器处理收到的请求，将数据返回至浏览器</p>
+<p>7、浏览器收到HTTP响应</p>
+<p>8、读取页面内容，浏览器渲染，解析html源码</p>
+<p>9、生成Dom树、解析css样式、js交互,渲染显示页面</p>
+<p>浏览器下载HTML后，首先解析头部代码，进行样式表下载，然后继续向下解析HTML代码，构建DOM树，同时进行样式下载。当DOM树构建完成后，立即开始构造CSSOM树。理想情况下，样式表下载速度够快，DOM树和CSSOM树进入一个并行的过程，当两棵树构建完毕，构建渲染树，然后进行绘制。</p>
+<p>Tips:浏览器安全解析策略对解析HTML造成的影响：</p>
+<p>当解析HTML时遇到内联JS代码，会阻塞DOM树的构建，会先执行完JS代码;当CSS样式文件没有下载完成时，浏览器解析HTML遇到了内联JS代码，此时，浏览器暂停JS脚本执行，暂停HTML解析。直到CSS文件下载完成，完成CSSOM树构建，重新恢复原来的解析。</p>
+<h4 id="四、白屏-性能优化"><a href="#四、白屏-性能优化" class="headerlink" title="四、白屏-性能优化"></a>四、白屏-性能优化</h4><p><strong>1. DNS解析优化</strong></p>
+<p>针对DNS Lookup环节，我们可以针对性的进行DNS解析优化。</p>
+<ul>
+<li>DNS缓存优化</li>
+<li>DNS预加载策略</li>
+<li>稳定可靠的DNS服务器</li>
+</ul>
+<p><strong>2. TCP网络链路优化</strong></p>
+<p>多花点钱吧</p>
+<p><strong>3. 服务端处理优化</strong></p>
+<p>服务端的处理优化，是一个非常庞大的话题，会涉及到如Redis缓存、数据库存储优化或是系统内的各种中间件以及Gzip压缩等… </p>
+<p><strong>4. 浏览器下载、解析、渲染页面优化</strong></p>
+<p>根据浏览器对页面的下载、解析、渲染过程，可以考虑一下的优化处理：</p>
+<ul>
+<li>尽可能的精简HTML的代码和结构</li>
+<li>尽可能的优化CSS文件和结构</li>
+<li>一定要合理的放置JS代码，尽量不要使用内联的JS代码</li>
+<li>将渲染首屏内容所需的关键CSS内联到HTML中，能使CSS更快速地下载。在HTML下载完成之后就能渲染了，页面渲染的时间提前，从而缩短首屏渲染时间；</li>
+<li>延迟首屏不需要的图片加载，而优先加载首屏所需图片（offsetTop&lt;clientHeight）</li>
+</ul>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">clientHeight</span><span class="comment">//获取屏幕可视区域的高度</span></span><br><span class="line">element.<span class="property">offsetTop</span><span class="comment">//获取元素相对于文档顶部的高度</span></span><br></pre></td></tr></table></figure></div>
+
+<p>因为JavaScript 会阻塞 DOM 生成，而样式文件又会阻塞 JavaScript 的执行，所以在实际的工程中需要重点关注 JavaScript 文件和样式表文件，使用不当会影响到页面性能的。 </p>
+]]></content>
+      <tags>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端如何选择图片的格式</title>
+    <url>/2023/07/23/%E5%89%8D%E7%AB%AF%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%9B%BE%E7%89%87%E7%9A%84%E6%A0%BC%E5%BC%8F/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
