@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>导致JavaScript中this指向混乱的原因</title>
-    <url>/2023/07/23/%E5%AF%BC%E8%87%B4JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E6%B7%B7%E4%B9%B1%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
+    <url>/2023/07/09/%E5%AF%BC%E8%87%B4JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E6%B7%B7%E4%B9%B1%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
     <content><![CDATA[<h4 id="在-JavaScript-中，this-关键字的指向通常是动态的，而不是静态的。这意味着-this-可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致-this-指向混乱的原因包括以下几个方面："><a href="#在-JavaScript-中，this-关键字的指向通常是动态的，而不是静态的。这意味着-this-可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致-this-指向混乱的原因包括以下几个方面：" class="headerlink" title="在 JavaScript 中，this 关键字的指向通常是动态的，而不是静态的。这意味着 this 可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致 this 指向混乱的原因包括以下几个方面："></a>在 JavaScript 中，this 关键字的指向通常是动态的，而不是静态的。这意味着 this 可以根据上下文环境的变化而发生改变，导致它的指向变得混乱或难以预测。常见的导致 this 指向混乱的原因包括以下几个方面：</h4><ol>
 <li><p>函数调用方式不同：当一个函数被调用时，它的 this 值取决于调用方式。如果使用普通函数调用方式（如 func()），则 this 会指向全局对象 window；如果使用方法调用方式（如 obj.func()），则 this 会指向调用该方法的对象。</p>
 </li>
@@ -22,7 +22,7 @@
   </entry>
   <entry>
     <title>模块化方案 CommonJS、AMD、CMD、ES Module</title>
-    <url>/2023/07/23/%E6%A8%A1%E5%9D%97%E5%8C%96%E6%96%B9%E6%A1%88%20CommonJS%E3%80%81AMD%E3%80%81CMD%E3%80%81ES%20Module/</url>
+    <url>/2023/07/11/%E6%A8%A1%E5%9D%97%E5%8C%96%E6%96%B9%E6%A1%88%20CommonJS%E3%80%81AMD%E3%80%81CMD%E3%80%81ES%20Module/</url>
     <content><![CDATA[<p><strong>时间轴：CommonJS –&gt; AMD –&gt; CMD –&gt; ES Module</strong></p>
 <h4 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h4><ul>
 <li><p>常用于：<code>服务器端</code>，<code>node</code>，<code>webpack</code></p>
@@ -80,7 +80,7 @@
   </entry>
   <entry>
     <title>触发BFC的方式以及应用场景</title>
-    <url>/2023/07/23/%E8%A7%A6%E5%8F%91BFC%E7%9A%84%E6%96%B9%E5%BC%8F%E4%BB%A5%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</url>
+    <url>/2023/07/13/%E8%A7%A6%E5%8F%91BFC%E7%9A%84%E6%96%B9%E5%BC%8F%E4%BB%A5%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</url>
     <content><![CDATA[<h4 id="文档流"><a href="#文档流" class="headerlink" title="文档流"></a>文档流</h4><p>常说的文档流其实分为<code>定位流</code>、<code>浮动流</code>、<code>普通流</code>三种 </p>
 <h4 id="绝对定位（-Absolute-positioning-）"><a href="#绝对定位（-Absolute-positioning-）" class="headerlink" title="绝对定位（ Absolute positioning ）"></a>绝对定位（ Absolute positioning ）</h4><p>如果元素的属性 <code>position</code> 为 <code>absolute</code> 或 <code>fixed</code>，它就是一个绝对定位元素。 </p>
 <p>在绝对定位布局中，元素会整体脱离普通流，因此绝对定位元素不会对其兄弟元素造成影响，而元素具体的位置由绝对定位的坐标决定。 </p>
@@ -104,7 +104,7 @@
 <li><code>FFC</code>（自适应格式化上下文）- <code>display: flex</code>或<code>display: inline-flex</code></li>
 </ul>
 <p><strong>注意</strong>：同一个元素不能同时存在于两个 <code>BFC</code> 中。 </p>
-<h4 id="BFC的触发方式"><a href="#BFC的触发方式" class="headerlink" title="BFC的触发方式"></a>BFC的触发方式</h4><p>MDN上对于<a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Block_formatting_context">BFC的触发条件</a>写的很多，总结一下常见的触发方式有（只需要满足一个条件即可触发 BFC 的特性）：</p>
+<h4 id="BFC的触发方式"><a href="#BFC的触发方式" class="headerlink" title="BFC的触发方式"></a>BFC的触发方式</h4><p>MDN上对于<a class="link"   href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Block_formatting_context" >BFC的触发条件</a>写的很多，总结一下常见的触发方式有（只需要满足一个条件即可触发 BFC 的特性）：</p>
 <ul>
 <li>根元素，即 <code>&lt;html&gt;</code></li>
 <li>浮动元素：<code>float</code> 值为 <code>left</code> 、<code>right</code></li>
@@ -181,7 +181,7 @@
   </entry>
   <entry>
     <title>理解回流重绘以及触发场景</title>
-    <url>/2023/07/23/%E7%90%86%E8%A7%A3%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF/</url>
+    <url>/2023/07/16/%E7%90%86%E8%A7%A3%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF/</url>
     <content><![CDATA[<p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -280,7 +280,7 @@
   </entry>
   <entry>
     <title>优化页面加载白屏时间</title>
-    <url>/2023/07/23/%E4%BC%98%E5%8C%96%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%99%BD%E5%B1%8F%E6%97%B6%E9%97%B4/</url>
+    <url>/2023/07/18/%E4%BC%98%E5%8C%96%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%99%BD%E5%B1%8F%E6%97%B6%E9%97%B4/</url>
     <content><![CDATA[<h4 id="一、白屏时间"><a href="#一、白屏时间" class="headerlink" title="一、白屏时间"></a>一、白屏时间</h4><p>白屏时间：即用户点击一个链接或打开浏览器输入URL地址后，从屏幕空白到显示第一个画面的时间。 </p>
 <h4 id="二、白屏时间的重要性"><a href="#二、白屏时间的重要性" class="headerlink" title="二、白屏时间的重要性"></a>二、白屏时间的重要性</h4><p>当用户点开一个链接或者是直接在浏览器中输入URL开始进行访问时，就开始等待页面的展示。页面渲染的时间越短，用户等待的时间就越短，用户感知到页面的速度就越快。这样可以极大地<strong>提升用户的体验，减少用户的跳出，提升页面的留存率。</strong> </p>
 <h4 id="三、白屏的过程"><a href="#三、白屏的过程" class="headerlink" title="三、白屏的过程"></a>三、白屏的过程</h4><p>从输入url，到页面的画面展示的过程</p>
@@ -445,7 +445,7 @@
   </entry>
   <entry>
     <title>Vue组件间通信方式</title>
-    <url>/2023/07/23/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
+    <url>/2023/07/07/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/</url>
     <content><![CDATA[<h4 id="一、组件间通信的分类"><a href="#一、组件间通信的分类" class="headerlink" title="一、组件间通信的分类"></a>一、组件间通信的分类</h4><p>组件间通信的分类可以分成以下</p>
 <ul>
 <li>父子组件之间的通信</li>
