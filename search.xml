@@ -181,7 +181,7 @@
   </entry>
   <entry>
     <title>理解回流重绘以及触发场景</title>
-    <url>/2023/07/16/%E7%90%86%E8%A7%A3%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF/</url>
+    <url>/2023/07/23/%E7%90%86%E8%A7%A3%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98%E4%BB%A5%E5%8F%8A%E8%A7%A6%E5%8F%91%E5%9C%BA%E6%99%AF/</url>
     <content><![CDATA[<p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -267,7 +267,7 @@
 <p>前者每次单独操作，都去触发一次渲染树更改（新浏览器不会），</p>
 <p>都去触发一次渲染树更改，从而导致相应的回流与重绘过程</p>
 <p>合并之后，等于我们将所有的更改一次性发出</p>
-<p>我们还可以通过通过设置元素属性<code>display: none</code>，将其从页面上去掉，然后再进行后续操作，这些后续操作也不会触发回流与重绘，这个过程称为离线操作</p>
+<p>我们还可以通过通过设置元素属性<code>display: none</code>，将其从页面上去掉，然后再进行后续操作，这些后续操作也不会触发回流与重绘，这个过程称为离线操</p>
 <div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;container&#x27;</span>)</span><br><span class="line">container.<span class="property">style</span>.<span class="property">width</span> = <span class="string">&#x27;100px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">height</span> = <span class="string">&#x27;200px&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">border</span> = <span class="string">&#x27;10px solid red&#x27;</span></span><br><span class="line">container.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>离线操作后 </p>
